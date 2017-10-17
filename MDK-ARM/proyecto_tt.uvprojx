@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_FULL_LL_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Drivers\CMSIS\Device\ST\STM32F0xx\Include;..\Drivers\STM32F0xx_HAL_Driver\Inc</IncludePath>
+              <IncludePath>..\Drivers\CMSIS\Device\ST\STM32F0xx\Include;..\Drivers\STM32F0xx_HAL_Driver\Inc;..\include;..\hld\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -469,6 +469,16 @@
               <FileName>stm32f0xx_ll_utils.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_ll_utils.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>hld</GroupName>
+          <Files>
+            <File>
+              <FileName>hld_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hld\source\hld_i2c.c</FilePath>
             </File>
           </Files>
         </Group>

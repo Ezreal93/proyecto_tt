@@ -1,9 +1,7 @@
-#include "stm32f0xx_ll_gpio.h"
-#include "stm32f0xx_ll_bus.h"
+#include "hld_i2c.h"
 
 int main(){
-  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA);
-  LL_GPIO_InitTypeDef mygpio;
-  LL_GPIO_StructInit(&mygpio);
-  return 0;
+  init_i2c1();
+  while(1){
+  }
 }
