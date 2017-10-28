@@ -480,6 +480,11 @@
               <FileType>1</FileType>
               <FilePath>..\hld\source\hld_i2c.c</FilePath>
             </File>
+            <File>
+              <FileName>hld_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hld\source\hld_spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
