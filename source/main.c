@@ -5,10 +5,14 @@
 #include "mpu6050.h"
 
 int main(){
-  init_i2c1();
+  hld_i2c_t* i2c= i2c1_init();
   spi1_init();
   uart1_init(9600);
-  serial_printf(uart1_puts, "Hello, World %d\n", 10);
+  serial_printf(uart1_puts, "Hello, World\n");
+  mpu6050_init(i2c);
+  int16_t datax;
   while(1){
+    datax = mpu6050_read_axis(i2c, 'x');
+    serial_printf(uart1_puts, "dataX: %f\n", (datax/4096.0));
   }
 }

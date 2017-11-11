@@ -16,12 +16,21 @@
 #define MPU6050_GYRO_ZOUT_H 0x37
 #define MPU6050_GYRO_ZOUT_L 0x48
 
+
+#define MPU6050_AFSEL_2G 0
+#define MPU6050_AFSEL_4G 1
+#define MPU6050_AFSEL_8G 2
+#define MPU6050_AFSEL_16G 3
+#define MPU6050_AFSEL_POS 3
+#define MPU6050_ACCEL_CONFIG 0x1C
+
 static void writeRegister(hld_i2c_t* i2c, uint8_t regAddress, uint8_t regValue);
 
 void mpu6050_init(hld_i2c_t* i2c){
 	writeRegister(i2c, 0x6B, 0x01);// reset
 	writeRegister(i2c, 0x6B, 0x00);//
 	writeRegister(i2c, 0x1A, 0x06);// 5Hz filter
+  writeRegister(i2c, MPU6050_ACCEL_CONFIG, (MPU6050_AFSEL_8G << MPU6050_AFSEL_POS ));
 	writeRegister(i2c, 0x1B, (0x02 << 3));// +- 1000 grads/s
 }
 
@@ -40,7 +49,7 @@ int16_t mpu6050_read_axis(hld_i2c_t* i2c, char axis){
 		axis_address_h = MPU6050_ACCEL_XOUT_H + (axis - 'x')*2;
 		axis_data_h = i2c->readData(MPU6050_ADDRESS,axis_address_h);
 		axis_data_l = i2c->readData(MPU6050_ADDRESS,axis_address_h+1);
-		accel_reading = (axis_data_h << 8) | (axis_data_l);
+		accel_reading =(int16_t) (axis_data_h << 8) | (axis_data_l);
 	}
 	return accel_reading;
 }

@@ -2,9 +2,8 @@
 #define HDL_I2C_H
 
 #include <stdint.h>
+#include "hld_api.h"
 
-void init_i2c1(void);
-int i2c1_write(uint8_t address, uint8_t nbytes, uint8_t *data);
-int i2c1_read(uint8_t address, uint8_t internal_address, uint8_t nbytes, uint8_t *data);
+hld_i2c_t* i2c1_init(void);
 
 #endif
