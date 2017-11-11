@@ -1,4 +1,5 @@
 MDK-ARM/Listings
 MDK-ARM/Objects
 MDK-ARM/*.uvguix.*
+MDK-ARM/EventRecorderStub.scvd
 *.swp
