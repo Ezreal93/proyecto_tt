@@ -2,6 +2,7 @@
 #include "hld_spi.h"
 #include "hld_uart.h"
 #include "serial_stdio.h"
+#include "mpu6050.h"
 
 int main(){
   init_i2c1();
