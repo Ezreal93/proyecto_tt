@@ -3,6 +3,8 @@
         "stm32f0xx_ll_gpio.h": "c",
         "stm32f0xx_ll_usart.h": "c",
         "stm32f0xx_ll_bus.h": "c",
-        "hld_i2c.h": "c"
+        "hld_i2c.h": "c",
+        "mpu6050.h": "c",
+        "hld_api.h": "c"
     }
 }
