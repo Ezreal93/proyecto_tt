@@ -3,6 +3,7 @@
 #include "hld_uart.h"
 #include "serial_stdio.h"
 #include "mpu6050.h"
+#include "bmp280.h"
 
 int main(){
   hld_i2c_t* i2c= i2c1_init();

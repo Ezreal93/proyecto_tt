@@ -5,6 +5,7 @@
         "stm32f0xx_ll_bus.h": "c",
         "hld_i2c.h": "c",
         "mpu6050.h": "c",
-        "hld_api.h": "c"
+        "hld_api.h": "c",
+        "bmp280_registers.h": "c"
     }
 }
