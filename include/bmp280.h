@@ -10,8 +10,6 @@ typedef int8_t (*bus_write_t)(uint8_t, uint8_t, uint8_t *, uint8_t);
 
 typedef	int8_t (*bus_read_t)(uint8_t, uint8_t, uint8_t *, uint8_t);
 
-#define BMP280_MDELAY_DATA_TYPE uint32_t
-
 /**************************************************************/
 /**\name	STRUCTURE DEFINITIONS                         */
 /**************************************************************/
@@ -48,7 +46,7 @@ typedef struct {
 
 	bus_write_t bus_write;/**< bus write function pointer*/
 	bus_read_t  bus_read;/**< bus read function pointer*/
-	void (*delay_msec)(BMP280_MDELAY_DATA_TYPE);/**< delay function pointer*/
+	void (*delay_msec)(uint32_t);/**< delay function pointer*/
 } bmp280_t;
 
 /**************************************************************/
@@ -641,67 +639,6 @@ int8_t bmp280_write_register(uint8_t v_addr_u8,
  */
 int8_t bmp280_read_register(uint8_t v_addr_u8,
 		uint8_t *v_data_u8, uint8_t v_len_u8);
-/**************************************************************/
-/**\name	FUNCTION FOR TRUE TEMPERATURE CALCULATION   */
-/**************************************************************/
-#ifdef BMP280_ENABLE_FLOAT
-/*!
- * @brief This API used to read
- * actual temperature from uncompensated temperature
- * @note Returns the value in Degree centigrade
- * @note Output value of "51.23" equals 51.23 DegC.
- *
- *
- *
- *  @param v_uncomp_temperature_s32 : value of uncompensated temperature
- *
- *
- *
- *  @return
- *	Actual temperature in floating point
- *
-*/
-double bmp280_compensate_temperature_double(int32_t v_uncomp_temperature_s32);
-/**************************************************************/
-/**\name	FUNCTION FOR TRUE PRESSURE CALCULATION   */
-/**************************************************************/
-/*!
- *	@brief Reads actual pressure from uncompensated pressure
- *	and returns pressure in Pa as double.
- *	@note Output value of "96386.2"
- *	equals 96386.2 Pa = 963.862 hPa.
- *
- *
- *
- *  @param v_uncomp_pressure_s32 : value of uncompensated pressure
- *
- *
- *
- *  @return
- *	Actual pressure in floating point
- *
-*/
-double bmp280_compensate_pressure_double(int32_t v_uncomp_pressure_s32);
-#endif
-#if defined(BMP280_ENABLE_INT64) && defined(BMP280_64BITSUPPORT_PRESENT)
-/*!
- * @brief This API used to read actual pressure from uncompensated pressure
- * @note returns the value in Pa as unsigned 32 bit
- * integer in Q24.8 format (24 integer bits and
- * 8 fractional bits). Output value of "24674867"
- * represents 24674867 / 256 = 96386.2 Pa = 963.862 hPa
- *
- *
- *
- *  @param v_uncomp_pressure_s32 : value of uncompensated pressure
- *
- *
- *
- *  @return actual pressure as 64bit output
- *
-*/
-uint32_t bmp280_compensate_pressure_int64(int32_t v_uncomp_pressure_s32);
-#endif
 /**************************************************************/
 /**\name	FUNCTION FOR DELAY CALCULATION DURING FORCEMODE  */
 /**************************************************************/
