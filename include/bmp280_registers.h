@@ -3,65 +3,6 @@
 
 #include <stdint.h>
 
-#define BMP280_BUS_WR_RETURN_TYPE int8_t
-
-/* links the order of parameters defined in
-BMP280_BUS_WR_PARAM_TYPE to function calls used inside the API*/
-#define BMP280_BUS_WR_PARAM_TYPES uint8_t, uint8_t,\
-	uint8_t *, uint8_t
-
-/* links the order of parameters defined in
-BMP280_BUS_WR_PARAM_TYPE to function calls used inside the API*/
-#define BMP280_BUS_WR_PARAM_ORDER(device_addr, register_addr,\
-	register_data, wr_len)
-
-/* never change this line */
-#define BMP280_BUS_WRITE_FUNC(device_addr, register_addr,\
-register_data, wr_len) bus_write(device_addr, register_addr,\
-	register_data, wr_len)
-/*!
-	@brief link macro between API function calls and bus read function
-	@note The bus write function can change since this is a
-	system dependant issue.
-
-    If the bus_read parameter calling order is like: reg_addr,
-    reg_data, wr_len it would be as it is here.
-
-    If the parameters are differently ordered or your communication
-    function like I2C need to know the device address,
-    you can change this macro accordingly.
-
-
-    BMP280_BUS_READ_FUNC(dev_addr, reg_addr, reg_data, wr_len)\
-    bus_read(dev_addr, reg_addr, reg_data, wr_len)
-
-    This macro lets all API functions call YOUR communication routine in a
-    way that equals your definition in the
-    refer BMP280_WR_FUNC_PTR definition.
-
-    @note: this macro also includes the "MSB='1'
-    for reading BMP280 addresses.
-
-*/
-/* defines the return parameter type of the BMP280_RD_FUNCTION
-*/
-#define BMP280_BUS_RD_RETURN_TYPE int8_t
-
-/* defines the calling parameter types of the BMP280_RD_FUNCTION
-*/
-#define BMP280_BUS_RD_PARAM_TYPES (uint8_t, uint8_t,\
-	uint8_t *, uint8_t)
-
-/* links the order of parameters defined in \
-BMP280_BUS_RD_PARAM_TYPE to function calls used inside the API
-*/
-#define BMP280_BUS_RD_PARAM_ORDER (device_addr, register_addr,\
-	register_data)
-
-/* never change this line */
-#define BMP280_BUS_READ_FUNC(device_addr, register_addr,\
-	register_data, rd_len)bus_read(device_addr, register_addr,\
-	register_data, rd_len)
 /****************************************/
 /**\name	DELAY       */
 /****************************************/
