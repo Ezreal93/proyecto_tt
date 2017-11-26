@@ -9,10 +9,11 @@
 
 hld_i2c_t i2c1_struct;
 
-void i2c1_sendData(uint8_t  address_7b, uint8_t data);
-uint8_t i2c1_readData(uint8_t address_7b, uint8_t regAddress);
-int i2c1_sendPacket(uint8_t address,  uint8_t *data, uint8_t nbytes);
-int i2c1_readPacket(uint8_t address, uint8_t internal_address, uint8_t *data, uint8_t nbytes);
+int8_t i2c1_sendData(uint8_t  address_7b, uint8_t data);
+int8_t i2c1_readData(uint8_t address_7b, uint8_t regAddress);
+int8_t i2c1_sendPacket(uint8_t address,  uint8_t *data, uint8_t nbytes);
+int8_t i2c1_readPacket(uint8_t address, uint8_t internal_address, uint8_t *data, uint8_t nbytes);
+int8_t i2c1_send_packetAtRegister(uint8_t address, uint8_t regAddress, uint8_t *data, uint8_t nbytes);
 
 hld_i2c_t* i2c1_init(void){
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
@@ -36,6 +37,7 @@ hld_i2c_t* i2c1_init(void){
     i2c1_struct.sendData = i2c1_sendData;
     i2c1_struct.readPacket = i2c1_readPacket;
     i2c1_struct.sendPacket = i2c1_sendPacket;
+		i2c1_struct.send_packetAtRegister = i2c1_send_packetAtRegister;
 
     return &i2c1_struct;
  }
@@ -48,17 +50,17 @@ static uint8_t *p_data;
 static uint8_t transfer_in_progress = 0;
 static uint8_t xfer_direction = 0;
  
-void i2c1_sendData(uint8_t  address_7b, uint8_t data){
-    i2c1_sendPacket(address_7b,  &data, 1);
+int8_t i2c1_sendData(uint8_t  address_7b, uint8_t data){
+    return i2c1_sendPacket(address_7b,  &data, 1);
 }
 
-uint8_t i2c1_readData(uint8_t address_7b, uint8_t regAddress){
+int8_t i2c1_readData(uint8_t address_7b, uint8_t regAddress){
     uint8_t data;
     i2c1_readPacket(address_7b, regAddress, &data, 1);
     return data;
 }
  
-int i2c1_sendPacket(uint8_t address,  uint8_t *data, uint8_t nbytes){
+int8_t i2c1_sendPacket(uint8_t address,  uint8_t *data, uint8_t nbytes){
     xfer_direction =  I2C_WRITE;
     bytes_remaining = nbytes;
     p_data = data;
@@ -74,14 +76,14 @@ int i2c1_sendPacket(uint8_t address,  uint8_t *data, uint8_t nbytes){
 }
 
 /* Do not use with DMA or any other async method!! */
-int i2c1_send_packetAtRegister(uint8_t address, uint8_t regAddress, uint8_t *data, uint8_t nbytes){
+int8_t i2c1_send_packetAtRegister(uint8_t address, uint8_t regAddress, uint8_t *data, uint8_t nbytes){
 		uint8_t tempBuffer[nbytes+1];
 		tempBuffer[0] = regAddress;
 		memcpy(tempBuffer+1, data, nbytes);
 		return i2c1_sendPacket(address,  tempBuffer, nbytes+1);
 }
 
-int i2c1_readPacket(uint8_t address, uint8_t internal_address, uint8_t *data, uint8_t nbytes){
+int8_t i2c1_readPacket(uint8_t address, uint8_t internal_address, uint8_t *data, uint8_t nbytes){
     LL_I2C_SetSlaveAddr(I2C1, address << 1);
     LL_I2C_SetTransferSize(I2C1, 1);
     LL_I2C_DisableAutoEndMode(I2C1);
