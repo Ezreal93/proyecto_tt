@@ -3,7 +3,7 @@
 #define MS5611_H
 
 #include <stdint.h>
-#include "hal.h"
+#include "hld_api.h"
 
 #define MS5611_OSR_256      0x00
 #define MS5611_OSR_512      0x01
@@ -21,7 +21,7 @@ typedef struct {
     union {
         /* todo: SPI */
         struct {
-            I2CDriver *driver;
+            hld_i2c_t *driver;
             uint8_t address;
         } i2c;
     } dev;
@@ -32,7 +32,7 @@ typedef struct {
 /** Initializes MS5611 device for I2C.
  *  The address depends on the value of the CSB pin.
  *  Returns 0 if initialization was successful. */
-int ms5611_i2c_init(ms5611_t *ms5611, I2CDriver *driver, int csb_pin_value);
+int ms5611_i2c_init(ms5611_t *ms5611, hld_i2c_t *driver, int csb_pin_value);
 
 /** Initializes MS5611 device for SPI */
 // void ms5611_spi_init(ms5611_t *ms5611, spi_dev_t *intf);

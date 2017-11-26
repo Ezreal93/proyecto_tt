@@ -1,6 +1,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include "ms5611.h"
 
 #define PROM_SENS       0
@@ -24,7 +25,7 @@ static int ms5611_command_i2c(ms5611_t *ms5611, uint8_t cmd, uint32_t *data, uin
 static int ms5611_command(ms5611_t *ms5611, uint8_t cmd, uint32_t *data, uint8_t len);
 static uint16_t ms5611_crc4_update(uint16_t crc, uint16_t data);
 
-int ms5611_i2c_init(ms5611_t *ms5611, I2CDriver *driver, int csb_pin_value)
+int ms5611_i2c_init(ms5611_t *ms5611, hld_i2c_t *driver, int csb_pin_value)
 {
     int err;
     uint8_t addr;
@@ -67,17 +68,17 @@ static int ms5611_command_i2c(ms5611_t *ms5611, uint8_t cmd, uint32_t *data, uin
     uint8_t buf[4];
 
     uint8_t addr = ms5611->dev.i2c.address;
-    I2CDriver *driver = ms5611->dev.i2c.driver;
-    msg_t msg;
+    hld_i2c_t *driver = ms5611->dev.i2c.driver;
+    int8_t msg;
 
 
     if (len > 3) {
         return 1;
     }
 
-    msg = i2cMasterTransmit(driver, addr, &cmd, 1, buf, len);
+    msg = driver->readPacket(addr, cmd, buf, len);
 
-    if (msg != MSG_OK) {
+    if (msg != 0) {
         return 1;
     }
 

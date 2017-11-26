@@ -69,6 +69,7 @@ hld/source/hld_spi.c \
 hld/source/hld_uart.c \
 source/bmp280.c \
 source/mpu6050.c \
+source/ms5611.c \
 source/serial_stdio.c \
 source/main.c 
 
