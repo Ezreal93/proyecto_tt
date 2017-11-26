@@ -12,6 +12,16 @@ int main(){
   serial_printf(uart1_puts, "Hello, World\n");
   mpu6050_init(i2c);
   int16_t datax;
+	
+	//bmp280_t bosh;
+	//bosh.bus_read = i2c->readPacket;
+	//bosh.bus_write = i2c->send_packetAtRegister;
+	//bosh.calib_param
+	//bosh.dev_addr
+	//bosh.delay_msec
+	//bosh.oversamp_pressure
+	//bosh.oversamp_temperature
+	
   while(1){
     datax = mpu6050_read_axis(i2c, 'x');
     serial_printf(uart1_puts, "dataX: %f\n", (datax/4096.0));
