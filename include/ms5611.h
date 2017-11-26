@@ -1,69 +1,66 @@
-/*
- * MS5611 pressure and temperature sensor driver
- *
- * Copyright (c) Tomasz Duszynski <tduszyns@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation.
- *
- */
 
-#ifndef _MS5611_H
-#define _MS5611_H
+#ifndef MS5611_H
+#define MS5611_H
 
-#include <linux/device.h>
-#include <linux/iio/iio.h>
-#include <linux/mutex.h>
+#include <stdint.h>
+#include "hal.h"
 
-struct regulator;
+#define MS5611_OSR_256      0x00
+#define MS5611_OSR_512      0x01
+#define MS5611_OSR_1024     0x02
+#define MS5611_OSR_2048     0x03
+#define MS5611_OSR_4096     0x04
 
-#define MS5611_RESET			0x1e
-#define MS5611_READ_ADC			0x00
-#define MS5611_READ_PROM_WORD		0xA0
-#define MS5611_PROM_WORDS_NB		8
+#define MS5611_ADC_PRESS    0
+#define MS5611_ADC_TEMP     1
 
-enum {
-	MS5611,
-	MS5607,
-};
+#define MS5611_I2C_ADDR1    0x76
+#define MS5611_I2C_ADDR2    0x77
 
-struct ms5611_chip_info {
-	u16 prom[MS5611_PROM_WORDS_NB];
+typedef struct {
+    union {
+        /* todo: SPI */
+        struct {
+            I2CDriver *driver;
+            uint8_t address;
+        } i2c;
+    } dev;
+    enum {ms5611_i2c = 0, ms5611_spi = 1} mode;
+    uint16_t prom[6];
+} ms5611_t;
 
-	int (*temp_and_pressure_compensate)(struct ms5611_chip_info *chip_info,
-					    s32 *temp, s32 *pressure);
-};
+/** Initializes MS5611 device for I2C.
+ *  The address depends on the value of the CSB pin.
+ *  Returns 0 if initialization was successful. */
+int ms5611_i2c_init(ms5611_t *ms5611, I2CDriver *driver, int csb_pin_value);
 
-/*
- * OverSampling Rate descriptor.
- * Warning: cmd MUST be kept aligned on a word boundary (see
- * m5611_spi_read_adc_temp_and_pressure in ms5611_spi.c).
- */
-struct ms5611_osr {
-	unsigned long conv_usec;
-	u8 cmd;
-	unsigned short rate;
-};
+/** Initializes MS5611 device for SPI */
+// void ms5611_spi_init(ms5611_t *ms5611, spi_dev_t *intf);
 
-struct ms5611_state {
-	void *client;
-	struct mutex lock;
+/** Resets the MS5611 device.
+ * Returns 1 on error accessing the sensor. */
+int ms5611_reset(ms5611_t *ms5611);
 
-	const struct ms5611_osr *pressure_osr;
-	const struct ms5611_osr *temp_osr;
+/** Read the PROM calibration values.
+ *  Returns 1 on error accessing the sensor. */
+int ms5611_prom_read(ms5611_t *ms5611);
 
-	int (*reset)(struct device *dev);
-	int (*read_prom_word)(struct device *dev, int index, u16 *word);
-	int (*read_adc_temp_and_pressure)(struct device *dev,
-					  s32 *temp, s32 *pressure);
+/** Starts an ADC conversion with oversampling rate osr.
+ * Returns required conversion time in microseconds.
+ * Command failed if returned value is negative. */
+int16_t ms5611_adc_start(ms5611_t *ms5611, uint8_t adc, uint8_t osr);
 
-	struct ms5611_chip_info *chip_info;
-	struct regulator *vdd;
-};
+/** Reads the ADC result.
+ * Variable at adc_result holds 0 if ADC conversion is not finished.
+ * Returns 1 on error accessing the sensor. */
+int ms5611_adc_read(ms5611_t *ms5611, uint32_t *adc_result);
 
-int ms5611_probe(struct iio_dev *indio_dev, struct device *dev,
-                 const char* name, int type);
-int ms5611_remove(struct iio_dev *indio_dev);
+/** Calculates pressure from pressure and temperature adc values.
+ * Returns pressure in Pascal.
+ * Optional: Save temperature in 1/100 deg Celsius to variable at p_temp.*/
+uint32_t ms5611_calc_press(ms5611_t *ms5611, uint32_t adc_press, uint32_t adc_temp, int32_t *p_temp);
 
-#endif /* _MS5611_H */
+/** Calculates temperature in 1/100 degrees Celsius. */
+int32_t ms5611_calc_temp(ms5611_t *ms5611, uint32_t adc_temp);
+
+#endif /* MS5611_H */
