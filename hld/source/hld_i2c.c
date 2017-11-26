@@ -1,6 +1,7 @@
 #include "hld_i2c.h"
 
 #include <stdbool.h>
+#include <string.h>
 
 #include "stm32f0xx_ll_gpio.h"
 #include "stm32f0xx_ll_bus.h"
@@ -46,7 +47,7 @@ static uint8_t bytes_remaining = 0;
 static uint8_t *p_data;
 static uint8_t transfer_in_progress = 0;
 static uint8_t xfer_direction = 0;
-
+ 
 void i2c1_sendData(uint8_t  address_7b, uint8_t data){
     i2c1_sendPacket(address_7b,  &data, 1);
 }
@@ -70,6 +71,14 @@ int i2c1_sendPacket(uint8_t address,  uint8_t *data, uint8_t nbytes){
     while(transfer_in_progress){};
 
     return 0;
+}
+
+/* Do not use with DMA or any other async method!! */
+int i2c1_send_packetAtRegister(uint8_t address, uint8_t regAddress, uint8_t *data, uint8_t nbytes){
+		uint8_t tempBuffer[nbytes+1];
+		tempBuffer[0] = regAddress;
+		memcpy(tempBuffer+1, data, nbytes);
+		return i2c1_sendPacket(address,  tempBuffer, nbytes+1);
 }
 
 int i2c1_readPacket(uint8_t address, uint8_t internal_address, uint8_t *data, uint8_t nbytes){
