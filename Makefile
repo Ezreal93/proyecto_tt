@@ -71,7 +71,8 @@ source/bmp280.c \
 source/mpu6050.c \
 source/ms5611.c \
 source/serial_stdio.c \
-source/main.c 
+source/commodule.c \
+source/main.c
 
 # ASM sources
 ASM_SOURCES =  \

@@ -5,3 +5,4 @@ MDK-ARM/EventRecorderStub.scvd
 *.swp
 *.TMP
 build/
+lora/
