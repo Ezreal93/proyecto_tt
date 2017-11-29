@@ -2,13 +2,9 @@
 #include <string.h>
 
 static hld_spi_t* _spi;
-static hld_pin_ro_t* _pin0;
-static hld_pin_ro_t* _pin1;
 
-uint8_t module_init(hld_spi_t* spi, hld_pin_ro_t* pin0, hld_pin_ro_t* pin1) {
+uint8_t module_init(hld_spi_t* spi) {
     _spi = spi;
-    _pin0 = pin0;
-    _pin1 = pin1;
 
     return ERR_NONE;
 }

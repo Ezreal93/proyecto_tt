@@ -18,7 +18,7 @@
 #define ERR_INVALID_BIT_RANGE           0x40
 
 
-uint8_t commodule_init(hld_spi_t* spi, hld_pin_ro_t* pin0, hld_pin_ro_t* pin1);
+uint8_t commodule_init(hld_spi_t* spi);
 
 uint8_t commodule_getRegValue(uint8_t reg, uint8_t msb, uint8_t lsb);
 uint8_t commodule_readRegisterBurst(uint8_t reg, uint8_t numBytes, uint8_t* inBytes);

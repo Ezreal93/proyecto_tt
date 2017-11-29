@@ -72,6 +72,7 @@ source/mpu6050.c \
 source/ms5611.c \
 source/serial_stdio.c \
 source/commodule.c \
+source/sx1278.c \
 source/main.c
 
 # ASM sources
