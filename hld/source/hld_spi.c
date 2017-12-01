@@ -21,7 +21,7 @@ void spi1_init(void){
     gpio.Alternate = LL_GPIO_AF_0;
     gpio.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
     LL_GPIO_Init(GPIOA, &gpio);
-  
+
     LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_SPI1);
 
     LL_SPI_InitTypeDef spi;
@@ -38,7 +38,7 @@ void spi1_init(void){
     LL_SPI_EnableNSSPulseMgt(SPI1);
 
     LL_SPI_Enable(SPI1);
- }
+}
 
 uint16_t spi1_xfer16(uint16_t data){
     LL_SPI_TransmitData16(SPI1, data);
