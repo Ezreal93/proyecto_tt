@@ -2,6 +2,10 @@ MDK-ARM/Listings
 MDK-ARM/Objects
 MDK-ARM/*.uvguix.*
 MDK-ARM/EventRecorderStub.scvd
+MDK-ARM-BASE/Listings
+MDK-ARM-BASE/Objects
+MDK-ARM-BASE/*.uvguix.*
+MDK-ARM-BASE/EventRecorderStub.scvd
 *.swp
 *.TMP
 build/
