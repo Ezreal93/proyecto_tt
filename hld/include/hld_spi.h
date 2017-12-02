@@ -2,8 +2,8 @@
 #define HLD_SPI_H
 
 #include <stdint.h>
+#include "hld_api.h"
 
-void spi1_init(void);
-uint16_t spi1_xfer(uint8_t* txdata, uint8_t txdata_len, uint8_t* rxdata, uint8_t rxdata_len);
+hld_spi_t* spi1_init(void);
 
 #endif

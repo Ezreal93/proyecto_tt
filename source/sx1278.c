@@ -8,7 +8,7 @@ static hld_pin_ro_t* _pin0;
 static hld_pin_ro_t* _pin1;
 static hld_spi_t* _spi;
 
-void sx1278_init(hld_spi_t* spi, hld_pin_ro_t* pin0, hld_pin_ro_t* pin1, bandwidth bw, spreadingfactor sf, codingrate cr){
+uint8_t sx1278_init(hld_spi_t* spi, hld_pin_ro_t* pin0, hld_pin_ro_t* pin1, bandwidth bw, spreadingfactor sf, codingrate cr){
     _pin0 = pin0;
     _pin1 = pin1;
     _spi = spi;
@@ -93,9 +93,7 @@ void sx1278_init(hld_spi_t* spi, hld_pin_ro_t* pin0, hld_pin_ro_t* pin1, bandwid
       _cr = SX1278_CR_4_5;
       break;
   }
-}
-
-uint8_t sx1278_begin(void){
+  
   commodule_init(_spi);
   return(sx1278_config(_bw, _sf, _cr));
 }

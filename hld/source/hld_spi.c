@@ -6,7 +6,11 @@
 #include "stm32f0xx_ll_bus.h"
 #include "stm32f0xx_ll_spi.h"
 
-void spi1_init(void){
+uint16_t spi1_xfer(uint8_t* txdata, uint8_t txdata_len, uint8_t* rxdata, uint8_t rxdata_len);
+
+hld_spi_t spi1;
+
+hld_spi_t* spi1_init(void){
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA);
     LL_GPIO_InitTypeDef gpio;
     LL_GPIO_StructInit(&gpio);
@@ -37,6 +41,8 @@ void spi1_init(void){
     spi.NSS = LL_SPI_NSS_SOFT;
     LL_SPI_Init(SPI1, &spi);
     //
+    spi1.xfer = spi1_xfer;
+    return &spi1;
 }
 
 uint16_t spi1_xfer(uint8_t* txdata, uint8_t txdata_len, uint8_t* rxdata, uint8_t rxdata_len){

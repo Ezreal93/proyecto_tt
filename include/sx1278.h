@@ -11,8 +11,7 @@ typedef enum Bandwidth bandwidth;
 typedef enum SpreadingFactor spreadingfactor;
 typedef enum CodingRate codingrate;
 
-void sx1278_init(hld_spi_t* spi, hld_pin_ro_t* pin0, hld_pin_ro_t* pin1, bandwidth bw, spreadingfactor sf, codingrate cr);
-uint8_t sx1278_begin(void);
+uint8_t sx1278_init(hld_spi_t* spi, hld_pin_ro_t* pin0, hld_pin_ro_t* pin1, bandwidth bw, spreadingfactor sf, codingrate cr);
 uint8_t sx1278_tx(char* data, uint8_t length);
 uint8_t sx1278_rxsingle(char* data, uint8_t* length);
 uint8_t sx1278_setmode(uint8_t mode);

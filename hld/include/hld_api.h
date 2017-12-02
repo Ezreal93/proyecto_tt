@@ -21,7 +21,6 @@ typedef struct {
 
 typedef struct {
     int8_t (*read)(void);
-    int8_t (*event)(int8_t options, void (*callback)(int8_t state));
 } hld_pin_ro_t;
 
 #endif

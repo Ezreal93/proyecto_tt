@@ -1,12 +1,25 @@
 #include "hld_spi.h"
 #include "hld_uart.h"
+#include "hld_gpio.h"
+#include "sx1278.h"
 #include "serial_stdio.h"
 void delay_ms(int delay_time);
 
 int main(){
+    char buffer[12] = "Hola mundo\n";
     uart1_init(9600);
+    hld_spi_t* spi =  spi1_init();
+    hld_pin_ro_t* dio0 = gpiob_init(8);
+    hld_pin_ro_t* dio1 = gpiob_init(9);
+ 
+    sx1278_init(spi, dio0, dio1, BW_500_00_KHZ, SF_12, CR_4_8);
+    
+    serial_printf(uart1_puts, "Intialization complete\n");
+    
     while(1){
-        serial_printf(uart1_puts, "Hello, world!\n");
+        serial_printf(uart1_puts, "sending data:");
+        sx1278_tx(buffer, 12);
+        serial_printf(uart1_puts, " ok\n");
         delay_ms(1000);
     }
 }
