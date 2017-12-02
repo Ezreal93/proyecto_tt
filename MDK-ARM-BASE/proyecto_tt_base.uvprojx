@@ -390,6 +390,11 @@
               <FileType>1</FileType>
               <FilePath>..\source\main_base.c</FilePath>
             </File>
+            <File>
+              <FileName>commodule.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\commodule.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

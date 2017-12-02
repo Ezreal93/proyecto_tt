@@ -12,8 +12,7 @@ typedef struct {
 } hld_i2c_t;
 
 typedef struct {
-    int8_t (*writePacket)(uint8_t *data, uint8_t nbytes);
-    int8_t (*readPacket)(uint8_t *data, uint8_t nbytes);
+    uint16_t (*xfer)(uint8_t* txdata, uint8_t txdata_len, uint8_t* rxdata, uint8_t rxdata_len);
 } hld_spi_t;
 
 #define ON_RISING_EDGE (0x1 << 0)
