@@ -17,10 +17,11 @@ void spi1_init(void){
     LL_GPIO_Init(GPIOA, &gpio);
 
     gpio.Pin = LL_GPIO_PIN_4;
-    gpio.Mode = LL_GPIO_MODE_ALTERNATE;
-    gpio.Alternate = LL_GPIO_AF_0;
+    gpio.Mode = LL_GPIO_MODE_OUTPUT;
     gpio.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
     LL_GPIO_Init(GPIOA, &gpio);
+
+    LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_4);
 
     LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_SPI1);
 
@@ -30,19 +31,56 @@ void spi1_init(void){
     spi.BitOrder = LL_SPI_MSB_FIRST;
     spi.ClockPhase = LL_SPI_PHASE_1EDGE;
     spi.ClockPolarity = LL_SPI_POLARITY_LOW;
-    spi.DataWidth = LL_SPI_DATAWIDTH_16BIT;
+    spi.DataWidth = LL_SPI_DATAWIDTH_8BIT;
     spi.Mode = LL_SPI_MODE_MASTER;
     spi.TransferDirection = LL_SPI_FULL_DUPLEX;
-    spi.NSS = LL_SPI_NSS_HARD_OUTPUT;
+    spi.NSS = LL_SPI_NSS_SOFT;
     LL_SPI_Init(SPI1, &spi);
-    LL_SPI_EnableNSSPulseMgt(SPI1);
-
-    LL_SPI_Enable(SPI1);
+    //
 }
 
-uint16_t spi1_xfer16(uint16_t data){
-    LL_SPI_TransmitData16(SPI1, data);
-    while(LL_SPI_IsActiveFlag_TXE(SPI1)){}//wait until empty TX
-    while(!LL_SPI_IsActiveFlag_RXNE(SPI1)){}//wait until not empty RX
-    return LL_SPI_ReceiveData16(SPI1);
+uint16_t spi1_xfer(uint8_t* txdata, uint8_t txdata_len, uint8_t* rxdata, uint8_t rxdata_len){
+
+    LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_4);//CS LOW
+    LL_SPI_Enable(SPI1);
+    uint8_t read_counter = 0;
+    uint8_t write_counter = 0;
+
+    //empty rx buffer before transmission
+    while(LL_SPI_IsActiveFlag_RXNE(SPI1)){
+        LL_SPI_ReceiveData8(SPI1);
+    }
+
+    //transmit all data
+    while(read_counter < txdata_len){
+        if(LL_SPI_IsActiveFlag_TXE(SPI1) && (write_counter < txdata_len)){
+            LL_SPI_TransmitData8(SPI1, txdata[write_counter]);
+            write_counter++;
+        }
+
+        if(LL_SPI_IsActiveFlag_RXNE(SPI1)){
+            LL_SPI_ReceiveData8(SPI1);
+            read_counter++;
+        }
+    }
+
+    read_counter = 0;
+    write_counter = 0;
+
+    while(read_counter < rxdata_len){
+        if(LL_SPI_IsActiveFlag_TXE(SPI1) && (write_counter < rxdata_len)){
+            LL_SPI_TransmitData8(SPI1, 0x00);
+            write_counter++;
+        }
+
+        if(LL_SPI_IsActiveFlag_RXNE(SPI1)){
+            rxdata[read_counter] = LL_SPI_ReceiveData8(SPI1);
+            read_counter++;
+        }
+    }
+
+    LL_SPI_Disable(SPI1);
+    LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_4);//CS HIGH
+
+    return 0;
 }

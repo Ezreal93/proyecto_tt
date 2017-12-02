@@ -1,4 +1,3 @@
-#include "hld_i2c.h"
 #include "hld_spi.h"
 #include "hld_uart.h"
 #include "serial_stdio.h"
