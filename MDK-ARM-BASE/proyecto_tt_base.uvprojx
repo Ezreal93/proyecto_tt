@@ -395,6 +395,11 @@
               <FileType>1</FileType>
               <FilePath>..\source\commodule.c</FilePath>
             </File>
+            <File>
+              <FileName>sx1278.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\sx1278.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

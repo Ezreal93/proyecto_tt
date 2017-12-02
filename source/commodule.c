@@ -3,7 +3,7 @@
 
 static hld_spi_t* _spi;
 
-uint8_t module_init(hld_spi_t* spi) {
+uint8_t commodule_init(hld_spi_t* spi) {
     _spi = spi;
     return ERR_NONE;
 }

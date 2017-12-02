@@ -13,7 +13,6 @@ void sx1278_init(hld_spi_t* spi, hld_pin_ro_t* pin0, hld_pin_ro_t* pin1, bandwid
     _pin1 = pin1;
     _spi = spi;
 
-
   switch(bw) {
     case BW_7_80_KHZ:
       _bw = SX1278_BW_7_80_KHZ;
@@ -270,5 +269,5 @@ int8_t sx1278_getLastPacketRSSI(void) {
 }
 
 void sx1278_clearirqflags(void) {
-  commodule_writeRegister(SX1278_REG_IRQ_FLAGS, 0b11111111);
+  commodule_writeRegister(SX1278_REG_IRQ_FLAGS, 0xFF);
 }
