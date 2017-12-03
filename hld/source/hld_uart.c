@@ -26,7 +26,7 @@ void uart1_init(uint32_t baudrate){
     usart.TransferDirection = LL_USART_DIRECTION_TX_RX;
     LL_USART_Init(USART1, &usart);
     LL_USART_Enable(USART1);
- }
+}
 
 void uart1_puts(const char* string){
     char c;

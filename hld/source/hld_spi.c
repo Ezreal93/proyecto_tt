@@ -41,6 +41,7 @@ hld_spi_t* spi1_init(void){
     spi.NSS = LL_SPI_NSS_SOFT;
     LL_SPI_Init(SPI1, &spi);
     //
+    LL_SPI_SetRxFIFOThreshold(SPI1, LL_SPI_RX_FIFO_TH_QUARTER);
     spi1.xfer = spi1_xfer;
     return &spi1;
 }
