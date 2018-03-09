@@ -22,7 +22,7 @@
   </DaveTm>
 
   <Target>
-    <TargetName>Target 1</TargetName>
+    <TargetName>STM32F030</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -117,6 +117,16 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>ST-LINKIII-KEIL_SWO</Key>
+          <Name>-U066FFF555656785087024257 -O206 -SF4000 -C0 -A0 -I0 -HNlocalhost -HP7184 -P2 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC1000 -FN1 -FF0STM32F0xx_16.FLM -FS08000000 -FL04000 -FP0($$Device:STM32F030F4$Flash\STM32F0xx_16.FLM)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>UL2CM3</Key>
+          <Name>UL2CM3(-S0 -C0 -P0 )  -FN1 -FC1000 -FD20000000 -FF0STM32F0xx_16 -FL04000 -FS08000000 -FP0($$Device:STM32F030F4$Flash\STM32F0xx_16.FLM)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>ARMRTXEVENTFLAGS</Key>
           <Name>-L70 -Z18 -C0 -M0 -T1</Name>
         </SetRegEntry>
@@ -135,33 +145,23 @@
           <Key>DLGUARM</Key>
           <Name>(105=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ST-LINKIII-KEIL_SWO</Key>
-          <Name>-U066FFF555656785087024257 -O8398 -SF4000 -C0 -A0 -I0 -HNlocalhost -HP7184 -P2 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC1000 -FN1 -FF0STM32F0xx_16.FLM -FS08000000 -FL04000 -FP0($$Device:STM32F051C4$Flash\STM32F0xx_16.FLM)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>UL2CM3</Key>
-          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0STM32F0xx_16 -FS08000000 -FL04000 -FP0($$Device:STM32F051C4$Flash\STM32F0xx_16.FLM))</Name>
-        </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint>
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>44</LineNumber>
+          <LineNumber>19</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134227818</Address>
+          <Address>134226600</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\hld\source\hld_spi.c</Filename>
+          <Filename>C:\Users\manuel\Documents\mycode\arm\stm32f0\proyecto_tt\hld\source\hld_uart.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\proyecto_tt_base\../hld/source/hld_spi.c\44</Expression>
+          <Expression>\\proyecto_tt_base\../hld/source/hld_uart.c\19</Expression>
         </Bp>
       </Breakpoint>
       <Tracepoint>
@@ -208,8 +208,16 @@
       <pMultCmdsp></pMultCmdsp>
       <SystemViewers>
         <Entry>
+          <Name>System Viewer\RCC</Name>
+          <WinId>35904</WinId>
+        </Entry>
+        <Entry>
           <Name>System Viewer\SPI1</Name>
           <WinId>35905</WinId>
+        </Entry>
+        <Entry>
+          <Name>System Viewer\USART1</Name>
+          <WinId>35903</WinId>
         </Entry>
       </SystemViewers>
     </TargetOption>
@@ -484,44 +492,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\hld\source\hld_i2c.c</PathWithFileName>
-      <FilenameWithoutPath>hld_i2c.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>22</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\hld\source\hld_spi.c</PathWithFileName>
-      <FilenameWithoutPath>hld_spi.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>23</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\hld\source\hld_uart.c</PathWithFileName>
+      <PathWithFileName>..\hld\source\stm32f030\hld_uart.c</PathWithFileName>
       <FilenameWithoutPath>hld_uart.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>24</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\hld\source\hld_gpio.c</PathWithFileName>
-      <FilenameWithoutPath>hld_gpio.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -537,7 +509,7 @@
 
   <Group>
     <GroupName>::Device</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>
