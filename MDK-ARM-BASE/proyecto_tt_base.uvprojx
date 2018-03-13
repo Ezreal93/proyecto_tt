@@ -495,6 +495,11 @@
               <FileType>1</FileType>
               <FilePath>..\hld\source\stm32f030\hld_uart.c</FilePath>
             </File>
+            <File>
+              <FileName>hld_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hld\source\stm32f030\hld_gpio.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

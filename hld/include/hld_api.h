@@ -23,4 +23,8 @@ typedef struct {
     int8_t (*read)(void);
 } hld_pin_ro_t;
 
+typedef struct {
+    void (*write)(int8_t);
+} hld_pin_wo_t;
+
 #endif
