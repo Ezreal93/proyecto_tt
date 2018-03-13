@@ -500,6 +500,11 @@
               <FileType>1</FileType>
               <FilePath>..\hld\source\stm32f030\hld_gpio.c</FilePath>
             </File>
+            <File>
+              <FileName>hld_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hld\source\stm32f030\hld_spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

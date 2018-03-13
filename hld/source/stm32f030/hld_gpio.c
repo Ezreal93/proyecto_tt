@@ -43,7 +43,6 @@ hld_pin_ro_t*  hld_gpio_a1_ro_init(void){
 }
 
 // Write only init
-
 void gpioa_pin_wo_init(uint8_t pin){
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA);
     LL_GPIO_InitTypeDef gpio;
@@ -78,5 +77,30 @@ hld_pin_wo_t*  hld_gpio_a10_wo_init(void){
     gpioa_pin_wo_init(10);
     pin_wo =  malloc(sizeof(hld_pin_wo_t));
     pin_wo->write = write_pa10;
+    return pin_wo;
+}
+
+// PORTB
+// Write only init
+void gpiob_pin_wo_init(uint8_t pin){
+    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
+    LL_GPIO_InitTypeDef gpio;
+    LL_GPIO_StructInit(&gpio);
+    gpio.Pin = (0x01 << pin);
+    gpio.Mode = LL_GPIO_MODE_OUTPUT;
+    LL_GPIO_Init(GPIOB, &gpio);
+}
+
+
+// PIN B1
+void write_pb1(int8_t state){
+     LL_GPIO_SetOutputPin(GPIOB, (state ? 0x1 << 10 : (0x1 << (16 + 10))));
+}
+
+hld_pin_wo_t*  hld_gpio_b1_wo_init(void){
+    hld_pin_wo_t* pin_wo;
+    gpiob_pin_wo_init(1);
+    pin_wo =  malloc(sizeof(hld_pin_wo_t));
+    pin_wo->write = write_pb1;
     return pin_wo;
 }

@@ -10,6 +10,14 @@ uint16_t spi1_xfer(uint8_t* txdata, uint8_t txdata_len, uint8_t* rxdata, uint8_t
 
 hld_spi_t spi1;
 
+/*
+ * Pin Usage
+ * PA4: NSS
+ * PA5: SCK
+ * PA6: MISO
+ * PA7: MOSI
+ */
+
 hld_spi_t* spi1_init(void){
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA);
     LL_GPIO_InitTypeDef gpio;

@@ -15,11 +15,15 @@ int main(){
     hld_pin_ro_t* pa1 = hld_gpio_a1_ro_init();
     hld_pin_wo_t* pa9 = hld_gpio_a9_wo_init();
     hld_pin_wo_t* pa10 = hld_gpio_a10_wo_init();
+    hld_pin_wo_t* pb1 = hld_gpio_b1_wo_init();
+
     serial_printf(uart1_puts, "gpio: ok\n");
     int8_t state = 0;
 
-    /*
     hld_spi_t* spi =  spi1_init();
+    uint8_t data[2] = {0x30,0xff};
+    spi->xfer(data, 2, 0, 0);
+    /*
     sx1278_init(spi, dio0, dio1, BW_500_00_KHZ, SF_12, CR_4_8);
     serial_printf(uart1_puts, "sx1278: ok\n");
     */
