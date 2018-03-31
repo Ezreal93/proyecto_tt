@@ -1,17 +1,43 @@
 #include "sx1278_registers.h"
 #include "sx1278.h"
 #include "commodule.h"
+#include "delay.h"
 
 uint8_t _bw, _sf, _cr;
 
-static hld_pin_ro_t* _pin0;
-static hld_pin_ro_t* _pin1;
+static hld_pin_ro_t* _pin_dio0;
+static hld_pin_ro_t* _pin_dio1;
+static hld_pin_wo_t* _pin_txen;
+static hld_pin_wo_t* _pin_rxen;
+static hld_pin_wo_t* _pin_rst;
 static hld_spi_t* _spi;
 
-uint8_t sx1278_init(hld_spi_t* spi, hld_pin_ro_t* pin0, hld_pin_ro_t* pin1, bandwidth bw, spreadingfactor sf, codingrate cr){
-    _pin0 = pin0;
-    _pin1 = pin1;
+uint8_t sx1278_init (
+        hld_spi_t* spi,
+        hld_pin_ro_t* pin_dio0,
+        hld_pin_ro_t * pin_dio1,
+        hld_pin_wo_t * pin_txen,
+        hld_pin_wo_t * pin_rxen,
+        hld_pin_wo_t * pin_rst,
+        bandwidth bw,
+        spreadingfactor sf,
+        codingrate cr
+        )
+{
+    _pin_dio0 = pin_dio0;
+    _pin_dio1 = pin_dio1;
+    _pin_txen = pin_txen;
+    _pin_rxen = pin_rxen;
+    _pin_rst = pin_rst;
     _spi = spi;
+
+    _pin_txen->write(0);
+    _pin_rxen->write(0);
+    _pin_rst->write(0);
+    delay_ms(1);
+    _pin_rst->write(1);
+    delay_ms(20);
+
 
   switch(bw) {
     case BW_7_80_KHZ:
@@ -202,6 +228,11 @@ uint8_t sx1278_config(uint8_t bw, uint8_t sf, uint8_t cr) {
 
 uint8_t sx1278_tx(char* data, uint8_t length) {
   sx1278_setmode(SX1278_STANDBY);
+  _pin_txen->write(0);
+  _pin_rxen->write(0);
+  delay_ms(1);
+  _pin_txen->write(1);
+  delay_ms(1);
 
   commodule_setRegValue(SX1278_REG_DIO_MAPPING_1, SX1278_DIO0_TX_DONE, 7, 6);
   sx1278_clearirqflags();
@@ -214,7 +245,7 @@ uint8_t sx1278_tx(char* data, uint8_t length) {
 
   sx1278_setmode(SX1278_TX);
 
-  while(!_pin0->read()) {
+  while(!_pin_dio0->read()) {
   }
 
   sx1278_clearirqflags();
@@ -225,6 +256,12 @@ uint8_t sx1278_tx(char* data, uint8_t length) {
 uint8_t sx1278_rxSingle(char* data, uint8_t* length) {
   sx1278_setmode(SX1278_STANDBY);
 
+  _pin_txen->write(0);
+  _pin_rxen->write(0);
+  delay_ms(1);
+  _pin_rxen->write(1);
+  delay_ms(1);
+
   commodule_setRegValue(SX1278_REG_DIO_MAPPING_1, SX1278_DIO0_RX_DONE | SX1278_DIO1_RX_TIMEOUT, 7, 4);
   sx1278_clearirqflags();
 
@@ -233,8 +270,8 @@ uint8_t sx1278_rxSingle(char* data, uint8_t* length) {
 
   sx1278_setmode(SX1278_RXSINGLE);
 
-  while(!_pin0->read()) {
-    if(_pin1->read()) {
+  while(!_pin_dio0->read()) {
+    if(_pin_dio1->read()) {
       sx1278_clearirqflags();
       return(ERR_RX_TIMEOUT);
     }

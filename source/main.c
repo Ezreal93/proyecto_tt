@@ -19,7 +19,6 @@ int main()
     //bosh.calib_param
     //bosh.dev_addr
     //bosh.delay_msec
-    //bosh.oversamp_pressure
     //bosh.oversamp_temperature
 
     while(1){

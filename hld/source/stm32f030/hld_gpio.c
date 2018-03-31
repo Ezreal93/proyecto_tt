@@ -81,20 +81,22 @@ hld_pin_wo_t*  hld_gpio_a10_wo_init(void){
 }
 
 // PORTB
-// Write only init
+// Write only init !!open drain!!
 void gpiob_pin_wo_init(uint8_t pin){
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
     LL_GPIO_InitTypeDef gpio;
     LL_GPIO_StructInit(&gpio);
     gpio.Pin = (0x01 << pin);
     gpio.Mode = LL_GPIO_MODE_OUTPUT;
+    gpio.OutputType = LL_GPIO_OUTPUT_OPENDRAIN;
+    gpio.Pull = LL_GPIO_PULL_UP;
     LL_GPIO_Init(GPIOB, &gpio);
 }
 
 
 // PIN B1
 void write_pb1(int8_t state){
-     LL_GPIO_SetOutputPin(GPIOB, (state ? 0x1 << 10 : (0x1 << (16 + 10))));
+     LL_GPIO_SetOutputPin(GPIOB, (state ? 0x1 << 1 : (0x1 << (16 + 1))));
 }
 
 hld_pin_wo_t*  hld_gpio_b1_wo_init(void){
