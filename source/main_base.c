@@ -15,7 +15,7 @@ int main(){
     hld_pin_ro_t* pin_dio1 = hld_gpio_a1_ro_init();
     hld_pin_wo_t* pin_txen = hld_gpio_a9_wo_init();
     hld_pin_wo_t* pin_rxen = hld_gpio_a10_wo_init();
-    hld_pin_wo_t* pin_rst = hld_gpio_b1_wo_init();
+    hld_pin_wo_t* pin_rst = hld_gpio_b1_wo_init_opendrain();
 
     serial_printf(uart1_puts, "gpio: ok\n");
 
