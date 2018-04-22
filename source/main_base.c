@@ -20,20 +20,12 @@ int main(){
     serial_printf(uart1_puts, "gpio: ok\n");
 
     hld_spi_t* spi =  spi1_init();
-    uint8_t data[2] = {0x30,0xff};
-    spi->xfer(data, 2, 0, 0);
     
-    sx1278_init(spi, pin_dio0, pin_dio1, pin_txen, pin_rxen, pin_rst, BW_500_00_KHZ, SF_12, CR_4_8);
-    serial_printf(uart1_puts, "sx1278: ok\n");
+    char buffer[12] = "Hello world\n";
+    sx1278_init(spi, pin_dio0, pin_dio1, pin_txen, pin_rxen, pin_rst, BW_125_00_KHZ, SF_12, CR_4_6);
     
     while(1){
-        /*
-        serial_printf(uart1_puts, "sending data:");
         sx1278_tx(buffer, 12);
-        serial_printf(uart1_puts, " ok\n");
-        delay_ms(1000);
-        */
-        serial_printf(uart1_puts, "ok asdf;kjijijifjeijejojfaslkdflkjei\n");
         delay_ms(1000);
     }
 }
