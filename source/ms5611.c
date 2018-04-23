@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "ms5611.h"
+#include "delay.h"
 
 #define PROM_SENS       0
 #define PROM_OFF        1
@@ -44,7 +45,7 @@ int ms5611_i2c_init(ms5611_t *ms5611, hld_i2c_t *driver, int csb_pin_value)
 
     err = ms5611_reset(ms5611);
 
-    chThdSleepMilliseconds(5);
+    delay_ms(5);
 
     if (err) {
         return err; /* error */

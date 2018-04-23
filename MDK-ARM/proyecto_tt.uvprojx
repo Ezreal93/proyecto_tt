@@ -391,11 +391,6 @@
               <FilePath>..\source\serial_stdio.c</FilePath>
             </File>
             <File>
-              <FileName>mpu6050.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\mpu6050.c</FilePath>
-            </File>
-            <File>
               <FileName>bmp280.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\bmp280.c</FilePath>
@@ -414,6 +409,11 @@
               <FileName>commodule.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\commodule.c</FilePath>
+            </File>
+            <File>
+              <FileName>ms5611.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\ms5611.c</FilePath>
             </File>
           </Files>
         </Group>
